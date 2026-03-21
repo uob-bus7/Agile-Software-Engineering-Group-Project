@@ -1,0 +1,1 @@
+Project docs like images and the sore go here (separate from data).
