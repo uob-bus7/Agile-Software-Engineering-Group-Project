@@ -1,1 +1,1 @@
-Project docs like images and the sore go here (separate from data).
+Project notes and supporting files can be stored here separately from the app data files.

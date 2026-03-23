@@ -1,10 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ tree.product_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <main class="page">
+    <section class="card hero">
+      <h1>{{ tree.home.title }}</h1>
+      <p>{{ tree.home.intro }}</p>
+    </section>
 
+    <section class="card form-card">
+      {% if error_message %}<div class="error-box">{{ error_message }}</div>{% endif %}
+      <form method="post" action="{{ url_for('index') }}" class="stack-lg">
+        <div>
+          <label for="student_id">Student ID</label>
+          <input id="student_id" name="student_id" type="text" value="{{ form_values.get('student_id', '') }}" placeholder="e.g. S1001" required>
+          <p class="field-help">{{ tree.home.student_id_help }}</p>
+        </div>
+        <fieldset>
+          <legend>{{ tree.home.category_text }}</legend>
+          <div class="options-grid options-grid-home">
+            {% for category in tree.categories %}
+              <label class="option-card category-card">
+                <span class="category-head">
+                  <input type="radio" name="category" value="{{ category.value }}" {% if form_values.get('category') == category.value %}checked{% endif %} required>
+                  <span class="option-title">{{ category.label }}</span>
+                </span>
+                <span class="option-description">{{ category.description }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        <button type="submit" class="primary-button">Continue</button>
+      </form>
+    </section>
+  </main>
 </body>
 </html>
