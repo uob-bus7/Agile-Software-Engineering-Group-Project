@@ -1,0 +1,285 @@
+/* Theme colours */
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --ink: #1f2937;
+  --muted: #526071;
+  --line: #d7deea;
+  --accent: #2457c5;
+  --accent-soft: #eaf1ff;
+  --error-bg: #fff1f2;
+  --error-border: #f3b7c1;
+  --warning-bg: #fff8e6;
+  --warning-border: #ecd7a2;
+}
+
+/* Border-box sizing so padding and borders don't distort layout widths. */
+* {
+  box-sizing: border-box;
+}
+
+/* Set the global font, colours, spacing, and line height. */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* Centre the main page and limit line length on larger screens. */
+.page {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: 32px 18px 48px;
+}
+
+/* Content width for question view. */
+.narrow-page {
+  width: min(100%, 760px);
+}
+
+/* Card styling for content panels */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(32, 54, 86, 0.06);
+  margin-bottom: 20px;
+}
+
+/* Remove default top margin from headings in cards. */
+.hero h1, .card h1, .card h2, .card h3, .card h4 {
+  margin-top: 0;
+}
+
+/* Colour gradient on the main introductory cards. */
+.hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+}
+
+/* Eyebrow text for context labels above headings. */
+.eyebrow {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* Secondary text shown under fields or question prompts. */
+.field-help {
+  color: var(--muted);
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+/* Vertical spacing for stacked form elements. */
+.stack-lg > * + * {
+  margin-top: 18px;
+}
+
+/* Makes labels and fieldset legends bold. */
+label, legend {
+  font-weight: 600;
+}
+
+/* Styling for the student ID text input. */
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+/* Gives grouped options a visual boundary. */
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 16px 16px;
+  margin: 0;
+}
+
+/* Keeps legends legible against the border. */
+legend {
+  padding: 0 10px;
+  color: var(--ink);
+  background: var(--card);
+}
+
+/* Grid rules for cards/option lists. */
+.options-grid, .options-list {
+  display: grid;
+  gap: 12px;
+}
+
+/* Card style for selectable options. */
+.option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Hover state for cards. */
+.option-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Keeps checkboxes aligned with the text. */
+.option-card input {
+  margin: 0;
+  margin-top: 0.36rem;
+  flex: 0 0 auto;
+}
+
+/* Text area of each card fills the width. */
+.option-body {
+  display: block;
+  flex: 1 1 auto;
+}
+
+/* Emphasise main label line in cards. */
+.option-title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Muted description text under main option label. */
+.option-description {
+  display: block;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Home-page cards get a block layout not inline. Split the card heading from the description underneath. */
+.category-card {
+  display: block;
+  padding: 16px;
+}
+
+/* Split the card heading from the description underneath. */
+.category-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+/* Removes bottom margin for card heading lines. */
+.category-head .option-title {
+  margin-bottom: 0;
+}
+
+/* Error message styling. */
+.error-box {
+  border: 1px solid var(--error-border);
+  background: var(--error-bg);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+/* Shared notice box shell for warnings/advisory text. */
+.notice-box {
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 14px 0 16px;
+}
+
+/* Warning styling for the browser-back message on question pages. */
+.notice-box-warning {
+  border: 1px solid var(--warning-border);
+  background: var(--warning-bg);
+}
+
+/* Adds responsive columns on wider screens. */
+@media (min-width: 860px) {
+  .options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Highlight the selected assessment summary on results page. */
+.context-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+}
+
+/* List spacing inside the assessment context box. */
+.context-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+/* Styling for extra assessment details like contacts and dates. */
+.context-detail {
+  color: var(--muted);
+}
+
+/* Layout for buttons. */
+.button-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Split button groups so secondary and primary ones look different. */
+.button-row-spread {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Sub-groups for left/right-aligned buttons in the same row. */
+.button-row-left,
+.button-row-right {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Styling for primary and secondary buttons. */
+.primary-button,
+.secondary-button {
+  appearance: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Primary button styling. */
+.primary-button {
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Secondary button styling. */
+.secondary-button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+/* Hover state for secondary buttons. */
+.secondary-button:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Small top-margin tweak. */
+.top-margin-sm {
+  margin-top: 16px;
+}
