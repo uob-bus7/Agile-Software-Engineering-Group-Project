@@ -1,0 +1,312 @@
+{
+  "product_name": "Student Support Triage and Signposting Tool",
+  "home": {
+    "title": "A calmer starting point when things feel hard to untangle",
+    "intro": "This tool is designed to help you work out a sensible first step. You only need to answer a few short questions.",
+    "student_id_help": "Enter your student ID so we can show the course and assessment information linked to your account.",
+    "category_text": "What feels closest to the kind of help you need right now?"
+  },
+  "categories": [
+    {
+      "value": "academic",
+      "label": "Studies, deadlines, applications, or next steps",
+      "description": "Coursework, exams, academic processes, job or postgraduate applications, or pressure around what to focus on next."
+    },
+    {
+      "value": "wellbeing",
+      "label": "How you have been feeling day to day",
+      "description": "Stress, low mood, loneliness, homesickness, or feeling like things are getting too much."
+    }
+  ],
+  "routes": {
+    "academic": {
+      "start_node": "academic_concern",
+      "nodes": {
+        "academic_concern": {
+          "id": "academic_concern",
+          "type": "choice",
+          "title": "What feels closest to what is going on?",
+          "text": "Choose the option that sounds most like the main kind of help you need.",
+          "options": [
+            {
+              "value": "prevent_problem",
+              "label": "I am trying to stop study, deadline, or application pressure from turning into a missed deadline or a bigger problem.",
+              "next": "assessment_choice_prevent"
+            },
+            {
+              "value": "something_went_wrong",
+              "label": "Something has already gone wrong with university work, an assessment, a deadline, or a related academic process.",
+              "next": "assessment_choice_setback"
+            },
+            {
+              "value": "prepare_or_improve",
+              "label": "I mainly need help with understanding, planning, or improving my work.",
+              "next": "assessment_choice_skill"
+            },
+            {
+              "value": "career_support",
+              "label": "I am feeling stuck about careers, applications, or what I should focus on next.",
+              "next": "academic_career_type"
+            }
+          ]
+        },
+        "assessment_choice_prevent": {
+          "id": "assessment_choice_prevent",
+          "type": "assessment_select",
+          "title": "Which assessment or assessments are being affected?",
+          "text": "Choose every piece of university work that feels part of this situation right now.",
+          "next": "academic_prevent_step"
+        },
+        "assessment_choice_setback": {
+          "id": "assessment_choice_setback",
+          "type": "assessment_select",
+          "title": "Which assessment or assessments are affected by what has happened?",
+          "text": "Choose every piece of university work affected by this so far.",
+          "next": "academic_setback"
+        },
+        "assessment_choice_skill": {
+          "id": "assessment_choice_skill",
+          "type": "assessment_select",
+          "title": "Which assessment or assessments is this mainly about?",
+          "text": "Choose the work you want this support to be tied to.",
+          "next": "academic_skill_area"
+        },
+        "academic_prevent_step": {
+          "id": "academic_prevent_step",
+          "type": "choice",
+          "title": "What would help most right now?",
+          "text": "Pick the kind of help that would make the next step clearer.",
+          "options": [
+            {
+              "value": "need_more_time",
+              "label": "I need to understand whether I can ask for more time.",
+              "next": "academic_route_ai1"
+            },
+            {
+              "value": "need_clear_process",
+              "label": "I need clear guidance on what I should do before the deadline gets closer.",
+              "next": "academic_route_ai1"
+            },
+            {
+              "value": "need_study_support",
+              "label": "I need practical study or revision support so I can get back on track.",
+              "next": "academic_route_ai3"
+            }
+          ]
+        },
+        "academic_setback": {
+          "id": "academic_setback",
+          "type": "choice",
+          "title": "What best describes what has happened?",
+          "text": "Choose the closest fit so we can point you to the most relevant next step.",
+          "options": [
+            {
+              "value": "missed_submission",
+              "label": "I missed a submission or I know I will miss it.",
+              "next": "academic_route_ai2"
+            },
+            {
+              "value": "missed_exam",
+              "label": "I missed an exam or the exam was badly affected by serious circumstances.",
+              "next": "academic_route_ai2"
+            },
+            {
+              "value": "formal_decision_concern",
+              "label": "I already have a decision or result and I think there may be grounds to question it.",
+              "next": "academic_route_ai2"
+            }
+          ]
+        },
+        "academic_skill_area": {
+          "id": "academic_skill_area",
+          "type": "choice",
+          "title": "What kind of academic support feels most useful?",
+          "text": "Choose the area that would help you feel steadier with the selected work.",
+          "options": [
+            {
+              "value": "writing",
+              "label": "Writing, structure, or planning my coursework.",
+              "next": "academic_route_ai3"
+            },
+            {
+              "value": "maths_stats",
+              "label": "Maths, data, or statistics support.",
+              "next": "academic_route_ai3"
+            },
+            {
+              "value": "english_language",
+              "label": "Academic English or confidence using academic language.",
+              "next": "academic_route_ai3"
+            },
+            {
+              "value": "revision_exam",
+              "label": "Revision, exam preparation, or understanding what is expected.",
+              "next": "academic_route_ai3"
+            }
+          ]
+        },
+        "academic_career_type": {
+          "id": "academic_career_type",
+          "type": "choice",
+          "title": "What feels closest on the career side?",
+          "text": "Choose the option that sounds most like the support you need first.",
+          "options": [
+            {
+              "value": "application_pressure",
+              "label": "Application deadlines or application preparation are taking over.",
+              "next": "academic_career_study_overlap"
+            },
+            {
+              "value": "career_direction",
+              "label": "I am unsure what to do next for jobs, placements, postgraduate study, or PhD plans.",
+              "next": "academic_route_ai4"
+            },
+            {
+              "value": "balance_with_study",
+              "label": "Career planning or applications are starting to affect my university work as well.",
+              "next": "assessment_choice_career"
+            }
+          ]
+        },
+        "academic_career_study_overlap": {
+          "id": "academic_career_study_overlap",
+          "type": "choice",
+          "title": "Is university work being affected as well?",
+          "text": "Choose the option that fits best right now.",
+          "options": [
+            {
+              "value": "career_plus_study",
+              "label": "Yes \u2014 one or more university assessments or deadlines are being affected too.",
+              "next": "assessment_choice_career"
+            },
+            {
+              "value": "career_only",
+              "label": "No \u2014 this is mainly about careers, applications, or next steps right now.",
+              "next": "academic_route_ai4"
+            }
+          ]
+        },
+        "assessment_choice_career": {
+          "id": "assessment_choice_career",
+          "type": "assessment_select",
+          "title": "Which assessment or assessments are being affected as well?",
+          "text": "Choose every piece of university work that has been knocked by this as well.",
+          "next": "academic_route_ai4"
+        }
+      },
+      "outcomes": {
+        "academic_route_ai1": {
+          "issue_id": "AI1",
+          "title": "A practical place to start before this gets harder to manage",
+          "summary": "The most useful first step here is to deal with the time-sensitive part clearly, then add any study support you still need."
+        },
+        "academic_route_ai2": {
+          "issue_id": "AI2",
+          "title": "A calm place to start after an assessment problem",
+          "summary": "The most helpful next move is to look at the guidance that fits what has already happened, one step at a time."
+        },
+        "academic_route_ai3": {
+          "issue_id": "AI3",
+          "title": "Support that can help you feel steadier with the selected work",
+          "summary": "It looks like practical academic support is the best first step here, rather than a formal process."
+        },
+        "academic_route_ai4": {
+          "issue_id": "AI4",
+          "title": "A clearer starting point for career planning and application pressure",
+          "summary": "It looks like you need a focused career-support route that helps you act on the right next step without letting applications and university work blur into one pile."
+        }
+      }
+    },
+    "wellbeing": {
+      "start_node": "wellbeing_urgency",
+      "nodes": {
+        "wellbeing_urgency": {
+          "id": "wellbeing_urgency",
+          "type": "choice",
+          "title": "How does this feel right now?",
+          "text": "Choose the closest fit. The wording does not have to be perfect.",
+          "options": [
+            {
+              "value": "urgent",
+              "label": "It feels urgent and I may need help straight away.",
+              "next": "wellbeing_route_ws3"
+            },
+            {
+              "value": "heavy",
+              "label": "It is making day-to-day life or study hard to manage.",
+              "next": "wellbeing_theme"
+            },
+            {
+              "value": "starting_point",
+              "label": "It is not urgent, but I know I need some support.",
+              "next": "wellbeing_theme"
+            }
+          ]
+        },
+        "wellbeing_theme": {
+          "id": "wellbeing_theme",
+          "type": "choice",
+          "title": "What feels closest to the main issue?",
+          "text": "Pick the option that feels most like what is weighing on you.",
+          "options": [
+            {
+              "value": "stress_burnout",
+              "label": "Stress, pressure, or burnout.",
+              "next": "wellbeing_support_style"
+            },
+            {
+              "value": "low_mood",
+              "label": "Low mood or feeling emotionally flat.",
+              "next": "wellbeing_support_style"
+            },
+            {
+              "value": "loneliness_homesickness",
+              "label": "Loneliness, homesickness, or feeling disconnected.",
+              "next": "wellbeing_support_style"
+            }
+          ]
+        },
+        "wellbeing_support_style": {
+          "id": "wellbeing_support_style",
+          "type": "choice",
+          "title": "What sounds most manageable as a first step?",
+          "text": "Choose the option that feels easiest to act on first.",
+          "options": [
+            {
+              "value": "direct_support",
+              "label": "Talking to someone directly.",
+              "next": "wellbeing_route_ws2"
+            },
+            {
+              "value": "quieter_self_help",
+              "label": "Starting with something quieter that I can look at by myself.",
+              "next": "wellbeing_route_ws1"
+            },
+            {
+              "value": "social_connection",
+              "label": "Something that helps me feel less alone.",
+              "next": "wellbeing_route_ws1"
+            }
+          ]
+        }
+      },
+      "outcomes": {
+        "wellbeing_route_ws1": {
+          "issue_id": "WS1",
+          "title": "A gentle starting point that does not ask too much of you",
+          "summary": "It looks like a lower-pressure option may be the best way in, especially if you need something manageable before doing anything more direct."
+        },
+        "wellbeing_route_ws2": {
+          "issue_id": "WS2",
+          "title": "Direct support is likely to help more than handling this alone",
+          "summary": "It looks like speaking to someone or using a more direct wellbeing route would be the strongest first step."
+        },
+        "wellbeing_route_ws3": {
+          "issue_id": "WS3",
+          "title": "Please use urgent support now",
+          "summary": "What you described sounds serious enough that urgent support should come first."
+        }
+      }
+    }
+  }
+}

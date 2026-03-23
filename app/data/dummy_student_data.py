@@ -1,3 +1,5 @@
+# Dummy student records used to demonstrate the triage flow
+
 dummy_student_data = {
     "students": {
         "S1001": {
@@ -46,7 +48,7 @@ dummy_student_data = {
         },
         "S1002": {
             "name": "Daniel Roberts",
-            "course_name": "B.Eng Civil Engineering with Industrial Year",
+            "course_name": "BEng Civil Engineering with Industrial Year",
             "college": "College Eng and Physical Sci",
             "year_of_study": 4,
             "modules": {
@@ -134,7 +136,7 @@ dummy_student_data = {
         },
         "S1004": {
             "name": "David Green",
-            "course_name": "B.Sc .Biochemistry",
+            "course_name": "BSc Biochemistry",
             "college": "College Life and Env Sci",
             "year_of_study": 2,
             "modules": {
@@ -266,7 +268,7 @@ dummy_student_data = {
         },
         "S1007": {
             "name": "Isaac Turner",
-            "course_name": "M.Sci. Physics and Astrophysics (International Study",
+            "course_name": "MSci Physics and Astrophysics (International Study)",
             "college": "College Eng and Physical Sci",
             "year_of_study": 4,
             "modules": {
