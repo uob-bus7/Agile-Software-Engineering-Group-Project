@@ -1,0 +1,280 @@
+{
+  "resource_bank": [
+    {
+      "id": "R1",
+      "name": "Coursework extension guidance",
+      "description": "Explains when coursework extension requests may be appropriate and what to do next.",
+      "link": "https://intranet.birmingham.ac.uk/student/academic-support/guidance-on-coursework-extensions-for-ug-and-pgt-students.aspx",
+      "priority": 1,
+      "actionable": true,
+      "issue_ids": [
+        "AI1"
+      ],
+      "required_any_tags": [
+        "coursework",
+        "essay",
+        "report",
+        "project",
+        "portfolio",
+        "presentation",
+        "test"
+      ],
+      "boost_if_tags": [
+        "need_more_time"
+      ],
+      "blocked_if_tags": [
+        "exam"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "Balancing your time at university",
+      "description": "A practical university guide on managing workload and avoiding last-minute pressure.",
+      "link": "https://www.birmingham.ac.uk/study/student-experience/stories/search/balancing-your-time-at-university-top-tips-for-student-life",
+      "priority": 3,
+      "actionable": false,
+      "issue_ids": [
+        "AI1"
+      ],
+      "boost_if_tags": [
+        "need_clear_process",
+        "balance_with_study"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "Extenuating circumstances guidance",
+      "description": "Explains when serious circumstances may affect an assessment and what the formal route looks like.",
+      "link": "https://intranet.birmingham.ac.uk/student/academic-support/registry/extenuating-circumstances/index.aspx",
+      "priority": 1,
+      "actionable": true,
+      "issue_ids": [
+        "AI2"
+      ],
+      "required_any_tags": [
+        "missed_submission",
+        "missed_exam"
+      ],
+      "boost_if_tags": [
+        "missed_exam",
+        "exam"
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "Academic appeals guidance",
+      "description": "Explains the formal review route for academic decisions where there may be recognised grounds to raise an appeal.",
+      "link": "https://intranet.birmingham.ac.uk/student/academic-support/registry/ug-gt/student-complaints-and-appeals-links/appeal.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI2"
+      ],
+      "required_any_tags": [
+        "formal_decision_concern"
+      ]
+    },
+    {
+      "id": "R5",
+      "name": "Academic Skills Centre appointments",
+      "description": "One-to-one academic support for planning, structure, academic writing, and study strategies.",
+      "link": "https://intranet.birmingham.ac.uk/student/libraries/asc/appointments/index.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI3",
+        "AI1"
+      ],
+      "boost_if_tags": [
+        "writing",
+        "need_study_support",
+        "revision_exam"
+      ]
+    },
+    {
+      "id": "R6",
+      "name": "Maths and statistics support",
+      "description": "Support for quantitative work, maths confidence, and statistics.",
+      "link": "https://intranet.birmingham.ac.uk/student/libraries/asc/maths-support/index.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI3"
+      ],
+      "boost_if_tags": [
+        "maths_stats"
+      ]
+    },
+    {
+      "id": "R7",
+      "name": "Academic English support",
+      "description": "Support for academic English, written expression, and confidence with university language.",
+      "link": "https://intranet.birmingham.ac.uk/student/bia/study-options.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI3"
+      ],
+      "boost_if_tags": [
+        "english_language",
+        "international_possible"
+      ]
+    },
+    {
+      "id": "R8",
+      "name": "Guild events",
+      "description": "A lighter option for students who want something that may help with isolation and connection.",
+      "link": "https://www.guildofstudents.com/events/",
+      "priority": 2,
+      "actionable": false,
+      "issue_ids": [
+        "WS1"
+      ],
+      "boost_if_tags": [
+        "loneliness_homesickness",
+        "social_connection"
+      ]
+    },
+    {
+      "id": "R9",
+      "name": "Self-help guides",
+      "description": "University-linked self-help material for students who want a quieter first step.",
+      "link": "https://selfhelp.cntw.nhs.uk/organisation/university-birmingham-1",
+      "priority": 2,
+      "actionable": false,
+      "issue_ids": [
+        "WS1"
+      ],
+      "boost_if_tags": [
+        "quieter_self_help",
+        "stress_burnout",
+        "low_mood"
+      ]
+    },
+    {
+      "id": "R10",
+      "name": "Wisdom app",
+      "description": "A student wellbeing app that can be a manageable first step for reflection and self-support.",
+      "link": "https://intranet.birmingham.ac.uk/student/news/public/2026/jan-mar26/why-every-uob-student-should-download-the-wisdom-app.aspx",
+      "priority": 3,
+      "actionable": false,
+      "issue_ids": [
+        "WS1"
+      ]
+    },
+    {
+      "id": "R11",
+      "name": "UBHeard",
+      "description": "A listening service that can help when speaking to someone feels like the right next step.",
+      "link": "https://intranet.birmingham.ac.uk/student/your-wellbeing/mental-health/ubheard.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "WS2"
+      ],
+      "boost_if_tags": [
+        "direct_support"
+      ]
+    },
+    {
+      "id": "R12",
+      "name": "Book a wellbeing appointment",
+      "description": "A route into more direct wellbeing support when things are becoming hard to manage alone.",
+      "link": "https://intranet.birmingham.ac.uk/student/your-wellbeing/wellbeing-officers.aspx",
+      "priority": 1,
+      "actionable": true,
+      "issue_ids": [
+        "WS2"
+      ],
+      "boost_if_tags": [
+        "direct_support",
+        "heavy"
+      ]
+    },
+    {
+      "id": "R13",
+      "name": "Urgent mental health help",
+      "description": "NHS urgent help information for situations that feel immediate or unsafe.",
+      "link": "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/",
+      "priority": 1,
+      "actionable": true,
+      "issue_ids": [
+        "WS3"
+      ]
+    },
+    {
+      "id": "R14",
+      "name": "Careers appointments and one-to-one advice",
+      "description": "Book one-to-one careers support for career direction, applications, internships, interview preparation, or next steps.",
+      "link": "https://bham.targetconnect.net/student/appointments.html?execution=e7s1",
+      "priority": 1,
+      "actionable": true,
+      "issue_ids": [
+        "AI4"
+      ],
+      "boost_if_tags": [
+        "career_direction",
+        "application_pressure"
+      ]
+    },
+    {
+      "id": "R15",
+      "name": "Careers events and workshops",
+      "description": "Browse careers events, employer sessions, and workshops that can help you explore options, improve applications, and build confidence.",
+      "link": "https://bham.targetconnect.net/student/events.html?execution=e5s1",
+      "priority": 3,
+      "actionable": false,
+      "issue_ids": [
+        "AI4"
+      ],
+      "boost_if_tags": [
+        "career_direction"
+      ]
+    },
+    {
+      "id": "R16",
+      "name": "Careers Network overview and contact hub",
+      "description": "Start here if you are not sure which careers page you need. This page gives an overview of Careers Network and signposts you to appointments, events, opportunities, college-based careers support, and ways to get in touch.",
+      "link": "https://intranet.birmingham.ac.uk/student/careers/contact-us.aspx",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI4"
+      ],
+      "boost_if_tags": [
+        "career_direction",
+        "application_pressure"
+      ]
+    },
+    {
+      "id": "R17",
+      "name": "Jobs, internships, placements, and graduate opportunities",
+      "description": "Search for opportunities including graduate schemes, internships, work experience, international opportunities, and other roles aimed at students and graduates.",
+      "link": "https://bham.targetconnect.net/student/jobs.html?execution=e6s1",
+      "priority": 2,
+      "actionable": true,
+      "issue_ids": [
+        "AI4"
+      ],
+      "boost_if_tags": [
+        "application_pressure",
+        "career_direction",
+        "balance_with_study"
+      ]
+    },
+    {
+      "id": "R18",
+      "name": "Pathways and online career development",
+      "description": "Build skills and career confidence in your own time through guided pathways, self-development tools, and online career-learning resources.",
+      "link": "https://bham.targetconnect.net/student/svc/pathways.html#/home?sort=mostRelevant&statuses=available",
+      "priority": 3,
+      "actionable": false,
+      "issue_ids": [
+        "AI4"
+      ],
+      "boost_if_tags": [
+        "career_direction"
+      ]
+    }
+  ]
+}
