@@ -37,6 +37,7 @@
         </div>
       </div>
     </section>
+    <section class="two-column">
       <section class="card">
         <h2>Support Options to Start With</h2>
         <div class="resource-list">
@@ -64,6 +65,18 @@
           </div>
         {% endif %}
       </section>
+      <section class="card">
+        <h2>Suggested Next Steps</h2>
+        <ol class="step-list">
+          {% for item in result.checklist %}
+            <li class="step-card">
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.detail }}</p>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </section>
   </main>
 </body>
 </html>

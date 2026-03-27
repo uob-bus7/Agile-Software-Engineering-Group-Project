@@ -57,6 +57,7 @@ class TriageEngine:
         selected_assessments = get_assessments(student, answers.get("selected_assessments", []))
         issue_id = outcome["issue_id"]
         resources = self._select_resources(issue_id, answers, selected_assessments)
+        checklist = self._build_checklist(issue_id, answers, selected_assessments, resources)
         extra_supports = self._extra_supports(issue_id)
         return {
             "category": category,
@@ -65,7 +66,7 @@ class TriageEngine:
             "summary": outcome["summary"],
             "assessments": selected_assessments,
             "resources": resources,
-            "checklist": [],
+            "checklist": checklist,
             "extra_supports": extra_supports,
         }
 
@@ -103,6 +104,197 @@ class TriageEngine:
             if "_score" in item:
                 del item["_score"]
         return selected[:6]
+
+    # Builds a practical and tailored action-list
+    def _build_checklist(self, issue_id, answers, assessments, resources):
+        titles = []
+        modules = []
+        lecturers = []
+        for assessment in assessments:
+            titles.append(assessment.get("title", "assessment"))
+            modules.append(assessment.get("module_name", "module"))
+            if assessment.get("lecturer"):
+                lecturers.append(assessment.get("lecturer"))
+        unique_modules = list(dict.fromkeys(modules))
+        unique_lecturers = list(dict.fromkeys(lecturers))
+        assessment_phrase = self._assessment_text(titles)
+        module_phrase = self._module_text(unique_modules)
+        contact_phrase = self._contact_text(unique_lecturers)
+        first_resource = None
+        if resources:
+            first_resource = resources[0]
+        checklist = []
+        if issue_id == "AI1":
+            if first_resource:
+                checklist.append(
+                    {
+                        "title": "Start with {0}".format(first_resource["name"]),
+                        "detail": "This is the clearest place to begin for {0}. It should help you work out what can still be done and what to do first.".format(assessment_phrase),
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Check the module page before sending a message",
+                    "detail": "Open the {0} canvas home page to find the module organisers' contact details and enquire about {1}. {2} If you are still unsure who to approach, your personal tutor is also a sensible place to start.".format(
+                        module_phrase, assessment_phrase, contact_phrase
+                    ),
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Write down the basics before you contact anyone",
+                    "detail": "Keep it short; which assessment is affected, the relevant deadlines, and what kind of help you are hoping for. That makes the next message much easier to send.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Open one support page before you leave this screen",
+                    "detail": "Choose one option from the support options on this page and open it now, so this does not stay as a vague worry in the background.",
+                }
+            )
+        elif issue_id == "AI2":
+            if first_resource:
+                checklist.append(
+                    {
+                        "title": "Read {0} first".format(first_resource["name"]),
+                        "detail": "Start there before trying to work out every possibility at once. It is the most relevant route for what has happened with {0}.".format(assessment_phrase),
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Write down what happened while it is still clear",
+                    "detail": "Make a brief note of what affected {0}, when it happened, and anything you may need to explain later.".format(assessment_phrase),
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Check the teaching contacts linked to these modules",
+                    "detail": "Start with the {0} canvas home page. {1} If you are not sure who to approach after that, your personal tutor is a reasonable place to start.".format(
+                        module_phrase, contact_phrase
+                    ),
+                }
+            )
+            if answers.get("academic_setback") == "formal_decision_concern":
+                checklist.append(
+                    {
+                        "title": "Treat formal review information carefully",
+                        "detail": "Only follow an appeals route if the guidance genuinely matches your situation. It is there if needed, but it is not the default answer to every setback.",
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Give yourself one clear next action, not five",
+                    "detail": "After you read the main guidance page, decide on the single next thing you will do today: send a message, gather information, or complete the relevant form.",
+                }
+            )
+        elif issue_id == "AI3":
+            if first_resource:
+                checklist.append(
+                    {
+                        "title": "Open {0}".format(first_resource["name"]),
+                        "detail": "That is the best-fit support option for {0} based on what you chose.".format(assessment_phrase),
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Check the assessment brief alongside the module page",
+                    "detail": "Look at the brief for {0} together with the {1} page. {2} That should make it easier to work out what to ask and what support fits best.".format(
+                        assessment_phrase, module_phrase, contact_phrase
+                    ),
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Turn your worry into one clear question",
+                    "detail": "If something still feels unclear, write one specific question you could ask the module teaching team or your personal tutor.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Choose one support route and act on it now",
+                    "detail": "Book it, open it, or save the contact details before leaving the page. That makes it much more likely you will actually use it.",
+                }
+            )
+        elif issue_id == "AI4":
+            if first_resource:
+                checklist.append(
+                    {
+                        "title": "Start with {0}".format(first_resource["name"]),
+                        "detail": "Use the clearest career-support route first rather than trying to deal with every possible next step at once.",
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Write down the next deadline or decision point",
+                    "detail": "That might be an application deadline, an employer event, a placement decision, or the point where you need to choose what to focus on next.",
+                }
+            )
+            if assessments:
+                checklist.append(
+                    {
+                        "title": "Check what university work is being affected",
+                        "detail": "List the assessment or assessments being knocked by this so you can see what needs protecting now: {0}.".format(assessment_phrase),
+                    }
+                )
+            checklist.append(
+                {
+                    "title": "Separate career actions from university actions",
+                    "detail": "Make one very short list for career tasks and one for university tasks. That makes it easier to see what is urgent and what can wait.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Choose one action you can complete today",
+                    "detail": "For example, book guidance, update one application document, or decide which opportunity matters most this week.",
+                }
+            )
+        elif issue_id == "WS1":
+            checklist.append(
+                {
+                    "title": "Choose the gentlest first step",
+                    "detail": "Pick the option that feels easiest to manage today. You do not need to tackle everything at once.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Give yourself permission to come back for more support",
+                    "detail": "If things start to feel heavier, you can move on to a more direct support option. Starting small does not lock you into staying small.",
+                }
+            )
+        elif issue_id == "WS2":
+            checklist.append(
+                {
+                    "title": "Choose one direct support route today",
+                    "detail": "The aim is to make one real contact point, not to research every option perfectly.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Let academic staff know if study is being affected",
+                    "detail": "If this is affecting deadlines, attendance, or concentration, your personal tutor or module team may need a brief heads-up once you feel able.",
+                }
+            )
+        elif issue_id == "WS3":
+            checklist.append(
+                {
+                    "title": "Use urgent support now",
+                    "detail": "What you described sounds serious enough that urgent support should come first. Go straight to the urgent help options on this page now.",
+                }
+            )
+            checklist.append(
+                {
+                    "title": "Use emergency help if you are in immediate danger",
+                    "detail": "If you feel unable to keep yourself safe right now, call 999 or go to A&E immediately.",
+                }
+            )
+        if not checklist and first_resource:
+            checklist.append(
+                {
+                    "title": "Start with {0}".format(first_resource["name"]),
+                    "detail": "This is the clearest first step based on what you selected.",
+                }
+            )
+        return checklist
 
     # Adjusts the setback question so its wording matches the selected assessment types
     def _setback_node(self, node, assessments):
@@ -213,6 +405,16 @@ class TriageEngine:
             del item["priority"]
         return extras
 
+    # Blends lecturer lists into the checklist sentences
+    def _contact_text(self, lecturers):
+        if not lecturers:
+            return "The module page should also list the teaching contacts for you."
+        if len(lecturers) == 1:
+            return "The teaching contact shown for this module is {0}.".format(lecturers[0])
+        if len(lecturers) == 2:
+            return "The teaching contacts shown here are {0} and {1}.".format(lecturers[0], lecturers[1])
+        return "The teaching contacts shown here include {0}, and {1}.".format(", ".join(lecturers[:-1]), lecturers[-1])
+
     # Formats one assessment to an option in the multi-select list
     def _assessment_label(self, assessment):
         type_label = assessment.get("type", "assessment").replace("_", " ")
@@ -223,6 +425,26 @@ class TriageEngine:
             type_label,
             due_label,
         )
+
+    # Joins assessment titles into a short phrase
+    def _assessment_text(self, titles):
+        if not titles:
+            return "your selected assessment"
+        if len(titles) == 1:
+            return titles[0]
+        if len(titles) == 2:
+            return "{0} and {1}".format(titles[0], titles[1])
+        return "{0}, and {1}".format(", ".join(titles[:-1]), titles[-1])
+
+    # Joins module names into a short phrase
+    def _module_text(self, modules):
+        if not modules:
+            return "module"
+        if len(modules) == 1:
+            return modules[0]
+        if len(modules) == 2:
+            return "{0} and {1}".format(modules[0], modules[1])
+        return "{0}, and {1}".format(", ".join(modules[:-1]), modules[-1])
 
     # Extracts the assessment types from the selected items
     def _assessment_types(self, assessments):

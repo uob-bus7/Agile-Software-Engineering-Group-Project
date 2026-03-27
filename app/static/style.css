@@ -199,8 +199,18 @@ legend {
   background: var(--warning-bg);
 }
 
+/* Two-column wrapper on the results page. */
+.two-column {
+  display: grid;
+  gap: 20px;
+}
+
 /* Adds responsive columns on wider screens. */
 @media (min-width: 860px) {
+  .two-column {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
   .options-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -246,6 +256,22 @@ legend {
   color: var(--muted);
 }
 
+/* Styling for the next-steps column. */
+.step-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+/* Spacing for checklist items. */
+.step-card {
+  margin-bottom: 1rem;
+}
+
+/* Heading-to-text spacing for checklist items. */
+.step-card h3 {
+  margin-bottom: 0.35rem;
+}
+
 /* Background for the extra wellbeing support cards. */
 .resource-card-soft {
   background: rgba(0, 0, 0, 0.02);
@@ -261,6 +287,18 @@ legend {
 /* The gap below extra-support subsection heading. */
 .support-subsection h3 {
   margin-bottom: 0.35rem;
+}
+
+/* Keeps visually hidden content available to screen readers, i.e. Speechify */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 /* Layout for buttons. */

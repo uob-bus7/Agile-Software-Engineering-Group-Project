@@ -8,6 +8,7 @@ BUS7 coursework repository for the **Student Support Triage and Signposting Tool
 - student ID lookup using dummy student data
 - short guided issue capture under two main facets: academic and wellbeing
 - focused signposting to relevant support resources
+- a prioritised next-step checklist, with time-sensitive actions above general advice
 
 
 ## Run locally
