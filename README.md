@@ -7,7 +7,7 @@ BUS7 coursework repository for the **Student Support Triage and Signposting Tool
 
 - student ID lookup using dummy student data
 - short guided issue capture under two main facets: academic and wellbeing
-- classification to a suggested support path
+- focused signposting to relevant support resources
 
 
 ## Run locally
@@ -30,4 +30,5 @@ flask run
 * `app/routes.py` handles the page flow
 * `app/triage_logic.py` handles tree progression and recommendation logic
 * `app/data/decision_tree.json` contains the question tree and outcome copy
+* `app/data/resource_bank.json` contains the compiled resource bank
 * `app/data/dummy_student_data.py` contains the student dataset

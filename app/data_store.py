@@ -18,6 +18,10 @@ def _load_json(filename):
 def load_decision_tree():
     return _load_json("decision_tree.json")
 
+# Load the compiled resource bank used for recommendations and signposting.
+def load_resource_bank():
+    return _load_json("resource_bank.json")
+
 
 # Fetch a specified student record and flatten its module deadlines.
 def get_student(student_id):

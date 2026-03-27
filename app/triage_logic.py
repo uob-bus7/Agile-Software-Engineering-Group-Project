@@ -4,8 +4,9 @@ from app.data_store import get_assessments, next_deadline_label
 # Core decision logic
 class TriageEngine:
     # Stores the decision tree and resource bank for reuse across requests.
-    def __init__(self, decision_tree):
+    def __init__(self, decision_tree, resource_bank):
         self.decision_tree = decision_tree
+        self.resource_bank = resource_bank
 
     # Returns the first question node
     def first_node(self, category):
@@ -49,21 +50,59 @@ class TriageEngine:
     def is_outcome(self, category, node_id):
         return node_id in self.decision_tree["routes"][category]["outcomes"]
 
+    # Assembles result page content once an outcome is reached
     def build_result(self, category, answers, outcome_id, student):
         outcome_source = self.decision_tree["routes"][category]["outcomes"][outcome_id]
         outcome = dict(outcome_source)
         selected_assessments = get_assessments(student, answers.get("selected_assessments", []))
         issue_id = outcome["issue_id"]
+        resources = self._select_resources(issue_id, answers, selected_assessments)
+        extra_supports = self._extra_supports(issue_id)
         return {
             "category": category,
             "issue_id": issue_id,
             "title": outcome["title"],
             "summary": outcome["summary"],
             "assessments": selected_assessments,
-            "resources": [],
+            "resources": resources,
             "checklist": [],
-            "extra_supports": [],
+            "extra_supports": extra_supports,
         }
+
+    # Filters the resource bank using issue IDs, tags, and priority scoring
+    def _select_resources(self, issue_id, answers, assessments):
+        issue_context = set()
+        for value in answers.values():
+            if isinstance(value, list):
+                for item in value:
+                    issue_context.add(str(item))
+            else:
+                issue_context.add(str(value))
+        for assessment in assessments:
+            issue_context.add(assessment.get("type", "").lower())
+        if len(assessments) > 1:
+            issue_context.add("multi_assessment")
+        selected = []
+        for resource in self.resource_bank["resource_bank"]:
+            if issue_id not in resource.get("issue_ids", []):
+                continue
+            required_any = resource.get("required_any_tags", [])
+            if required_any and not any(tag in issue_context for tag in required_any):
+                continue
+            blocked_any = resource.get("blocked_if_tags", [])
+            if blocked_any and any(tag in issue_context for tag in blocked_any):
+                continue
+            item = dict(resource)
+            score = item.get("priority", 99)
+            if any(tag in issue_context for tag in item.get("boost_if_tags", [])):
+                score -= 2
+            item["_score"] = score
+            selected.append(item)
+        selected.sort(key=lambda item: (item["_score"], item.get("name", "")))
+        for item in selected:
+            if "_score" in item:
+                del item["_score"]
+        return selected[:6]
 
     # Adjusts the setback question so its wording matches the selected assessment types
     def _setback_node(self, node, assessments):
@@ -152,6 +191,27 @@ class TriageEngine:
                 },
             ]
         return node
+
+    # Adds a small wellbeing nudge to academic outcomes where wider stress may also matter
+    def _extra_supports(self, issue_id):
+        if not issue_id.startswith("AI"):
+            return []
+        extras = []
+        for resource in self.resource_bank.get("resource_bank", []):
+            if resource.get("id") in {"R12", "R11", "R9"}:
+                extras.append(
+                    {
+                        "id": resource["id"],
+                        "name": resource["name"],
+                        "description": resource["description"],
+                        "link": resource["link"],
+                        "priority": resource.get("priority", 99),
+                    }
+                )
+        extras.sort(key=lambda item: (item["priority"], item["name"]))
+        for item in extras:
+            del item["priority"]
+        return extras
 
     # Formats one assessment to an option in the multi-select list
     def _assessment_label(self, assessment):

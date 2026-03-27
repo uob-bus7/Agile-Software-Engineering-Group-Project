@@ -37,6 +37,33 @@
         </div>
       </div>
     </section>
+      <section class="card">
+        <h2>Support Options to Start With</h2>
+        <div class="resource-list">
+          {% for resource in result.resources %}
+            <article class="resource-card">
+              <h3>{{ resource.name }}</h3>
+              <p>{{ resource.description }}</p>
+              {% if resource.link %}<a href="{{ resource.link }}" target="_blank" rel="noreferrer">Open This Page</a>{% endif %}
+            </article>
+          {% endfor %}
+        </div>
+        {% if result.extra_supports %}
+          <div class="support-subsection">
+            <h3>If This is Affecting You More Broadly</h3>
+            <p>You do not have to keep the academic side and the personal side completely separate. If this situation is starting to affect your stress, mood, or confidence, one of these may help as well.</p>
+            <div class="resource-list">
+              {% for resource in result.extra_supports %}
+                <article class="resource-card resource-card-soft">
+                  <h4>{{ resource.name }}</h4>
+                  <p>{{ resource.description }}</p>
+                  {% if resource.link %}<a href="{{ resource.link }}" target="_blank" rel="noreferrer">Open This Page</a>{% endif %}
+                </article>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </section>
   </main>
 </body>
 </html>

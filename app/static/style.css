@@ -206,6 +206,27 @@ legend {
   }
 }
 
+/* Grid layout for recommended resources. */
+.resource-list {
+  display: grid;
+  gap: 12px;
+}
+
+/* Card styling for individual support resources. */
+.resource-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+}
+
+/* Highlight resource links. */
+.resource-card a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /* Highlight the selected assessment summary on results page. */
 .context-box {
   margin-top: 14px;
@@ -223,6 +244,23 @@ legend {
 /* Styling for extra assessment details like contacts and dates. */
 .context-detail {
   color: var(--muted);
+}
+
+/* Background for the extra wellbeing support cards. */
+.resource-card-soft {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Horizontal rule above the extra wellbeing section. */
+.support-subsection {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+/* The gap below extra-support subsection heading. */
+.support-subsection h3 {
+  margin-bottom: 0.35rem;
 }
 
 /* Layout for buttons. */

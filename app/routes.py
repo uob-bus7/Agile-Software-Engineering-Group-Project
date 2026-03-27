@@ -1,12 +1,13 @@
 from flask import redirect, render_template, request, session, url_for
 from app import app
-from app.data_store import get_student, load_decision_tree
+from app.data_store import get_student, load_decision_tree, load_resource_bank
 from app.triage_logic import TriageEngine
 
 
 # Load static app content so it can be reused across requests.
 decision_tree = load_decision_tree()
-triage_engine = TriageEngine(decision_tree)
+resource_bank = load_resource_bank()
+triage_engine = TriageEngine(decision_tree, resource_bank)
 
 
 # Remove all saved flow data if user restarts/session becomes invalid.
