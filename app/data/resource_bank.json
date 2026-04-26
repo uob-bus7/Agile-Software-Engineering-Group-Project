@@ -16,14 +16,14 @@
         "report",
         "project",
         "portfolio",
-        "presentation",
-        "test"
+        "presentation"
       ],
       "boost_if_tags": [
         "need_more_time"
       ],
       "blocked_if_tags": [
-        "exam"
+        "exam",
+        "test"
       ]
     },
     {

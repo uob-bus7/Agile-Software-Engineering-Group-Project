@@ -58,7 +58,7 @@ class TriageEngine:
         issue_id = outcome["issue_id"]
         resources = self._select_resources(issue_id, answers, selected_assessments)
         checklist = self._build_checklist(issue_id, answers, selected_assessments, resources)
-        extra_supports = self._extra_supports(issue_id)
+        extra_supports = self._extra_supports(issue_id, answers, selected_assessments)
         return {
             "category": category,
             "issue_id": issue_id,
@@ -70,8 +70,13 @@ class TriageEngine:
             "extra_supports": extra_supports,
         }
 
-    # Filters the resource bank using issue IDs, tags, and priority scoring
+    # Filters the resource bank using issue IDs, tags, and priority scoring.
+    # issue_id may be a single id (e.g. "AI4") or an iterable of ids (e.g. ["AI1", "AI3"]).
     def _select_resources(self, issue_id, answers, assessments):
+        if isinstance(issue_id, str):
+            wanted_issue_ids = {issue_id}
+        else:
+            wanted_issue_ids = set(issue_id)
         issue_context = set()
         for value in answers.values():
             if isinstance(value, list):
@@ -85,7 +90,7 @@ class TriageEngine:
             issue_context.add("multi_assessment")
         selected = []
         for resource in self.resource_bank["resource_bank"]:
-            if issue_id not in resource.get("issue_ids", []):
+            if not wanted_issue_ids.intersection(resource.get("issue_ids", [])):
                 continue
             required_any = resource.get("required_any_tags", [])
             if required_any and not any(tag in issue_context for tag in required_any):
@@ -384,26 +389,52 @@ class TriageEngine:
             ]
         return node
 
-    # Adds a small wellbeing nudge to academic outcomes where wider stress may also matter
-    def _extra_supports(self, issue_id):
+    # Adds a small companion section to academic outcomes.
+    # For most academic outcomes this is a wellbeing nudge. For AI4 (careers) when
+    # the student has flagged that university work is being affected, this is the
+    # mirrored case: a small set of relevant academic resources alongside the careers
+    # ones, so the student does not lose the academic side of what they told us.
+    def _extra_supports(self, issue_id, answers, assessments):
         if not issue_id.startswith("AI"):
-            return []
-        extras = []
-        for resource in self.resource_bank.get("resource_bank", []):
-            if resource.get("id") in {"R12", "R11", "R9"}:
-                extras.append(
+            return {"heading": "", "intro": "", "resources": []}
+        if issue_id == "AI4" and assessments:
+            academic_resources = self._select_resources(["AI1", "AI3"], answers, assessments)
+            resources = []
+            for resource in academic_resources[:4]:
+                resources.append(
                     {
                         "id": resource["id"],
                         "name": resource["name"],
                         "description": resource["description"],
                         "link": resource["link"],
-                        "priority": resource.get("priority", 99),
                     }
                 )
-        extras.sort(key=lambda item: (item["priority"], item["name"]))
-        for item in extras:
-            del item["priority"]
-        return extras
+            return {
+                "heading": "If University Work Is Being Affected as Well",
+                "intro": "You told us that careers pressure is starting to knock your university work too. These academic-side options are worth keeping in view alongside the careers support, so the study side does not get lost.",
+                "resources": resources,
+            }
+        wellbeing_ids = {"R12", "R11", "R9"}
+        resources = []
+        for resource in self.resource_bank.get("resource_bank", []):
+            if resource.get("id") in wellbeing_ids:
+                resources.append(
+                    {
+                        "id": resource["id"],
+                        "name": resource["name"],
+                        "description": resource["description"],
+                        "link": resource["link"],
+                        "_priority": resource.get("priority", 99),
+                    }
+                )
+        resources.sort(key=lambda item: (item["_priority"], item["name"]))
+        for item in resources:
+            del item["_priority"]
+        return {
+            "heading": "If This is Affecting You More Broadly",
+            "intro": "You do not have to keep the academic side and the personal side completely separate. If this situation is starting to affect your stress, mood, or confidence, one of these may help as well.",
+            "resources": resources,
+        }
 
     # Blends lecturer lists into the checklist sentences
     def _contact_text(self, lecturers):
