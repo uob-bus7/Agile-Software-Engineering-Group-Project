@@ -25,6 +25,9 @@ def load_resource_bank():
 
 # Fetch a specified student record and flatten its module deadlines.
 def get_student(student_id):
+    if not student_id:
+        return None
+    student_id = student_id.upper()
     student = dummy_student_data.get("students", {}).get(student_id)
     if student is None:
         return None

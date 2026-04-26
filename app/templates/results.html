@@ -49,12 +49,12 @@
             </article>
           {% endfor %}
         </div>
-        {% if result.extra_supports %}
+        {% if result.extra_supports and result.extra_supports.resources %}
           <div class="support-subsection">
-            <h3>If This is Affecting You More Broadly</h3>
-            <p>You do not have to keep the academic side and the personal side completely separate. If this situation is starting to affect your stress, mood, or confidence, one of these may help as well.</p>
+            <h3>{{ result.extra_supports.heading }}</h3>
+            <p>{{ result.extra_supports.intro }}</p>
             <div class="resource-list">
-              {% for resource in result.extra_supports %}
+              {% for resource in result.extra_supports.resources %}
                 <article class="resource-card resource-card-soft">
                   <h4>{{ resource.name }}</h4>
                   <p>{{ resource.description }}</p>

@@ -45,6 +45,20 @@ def _prune_answers(category, answers, history, current_node):
     return pruned
 
 
+# Drops any stored answer whose node is not on the path leading up to (and including) the question being submitted. This stops earlier walks of the tree from leaving stale downstream answers in the session (important when an assessment-select node is re-submitted with a different selection, which would otherwise reshape later questions while leaving the old answer in place.)
+def _drop_stale_downstream(answers, history, current_node):
+    keep = set(history)
+    if current_node:
+        keep.add(current_node)
+    pruned = {}
+    for key, value in answers.items():
+        if key == "selected_assessments":
+            pruned[key] = value
+        elif key in keep:
+            pruned[key] = value
+    return pruned
+
+
 # Show landing page and start a new triage session after form submission.
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -57,6 +71,8 @@ def index():
             error_message = "Please enter your student ID and choose the kind of help that feels closest to your situation."
         elif student is None:
             error_message = "We could not find a record for that student ID."
+        elif category not in decision_tree["routes"]:
+            error_message = "Please choose one of the listed options."
         if error_message:
             return render_template("index.html", tree=decision_tree, error_message=error_message, form_values=request.form)
         _clear_flow()
@@ -84,6 +100,7 @@ def question():
         return redirect(url_for("index"))
     node = triage_engine.get_node(category, current_node, student, answers)
     if request.method == "POST":
+        answers = _drop_stale_downstream(answers, history, current_node)
         if node.get("type") == "assessment_select":
             selected_answers = request.form.getlist("selected_answers")
             if not selected_answers:
